@@ -38,3 +38,17 @@ lerna-debug.log*
 .env
 .env.local
 .env.*.local
+
+# Documentation (keep in docs/ folder, ignore duplicate MDs in root)
+*.md
+!README.md
+/docs/*.md
+
+# Test files
+*.spec.ts
+*.test.ts
+test-db.js
+jest.setup.ts
+
+# Build info
+*.tsbuildinfo

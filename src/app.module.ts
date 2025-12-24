@@ -12,6 +12,11 @@ import { CustomersModule } from './modules/customers/customers.module';
 import { TripsModule } from './modules/trips/trips.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { CompaniesModule } from './modules/companies/companies.module';
+import { AllocationModule } from './modules/allocation/allocation.module';
+import { EmailIntegrationModule } from './modules/email-integration/email-integration.module';
+import { WhatsappIntegrationModule } from './modules/whatsapp-integration/whatsapp-integration.module';
+import { AccountsModule } from './modules/accounts/accounts.module';
 import { HealthController } from './health.controller';
 
 @Module({
@@ -31,6 +36,11 @@ import { HealthController } from './health.controller';
     // Feature Modules
     AuthModule,
     UsersModule,
+    CompaniesModule,
+    WhatsappIntegrationModule,
+    EmailIntegrationModule,
+    AccountsModule,
+    AllocationModule,
     DriversModule,
     VehiclesModule,
     BookingsModule,

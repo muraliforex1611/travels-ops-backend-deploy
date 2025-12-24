@@ -19,13 +19,13 @@ CREATE TABLE IF NOT EXISTS companies (
 CREATE TABLE IF NOT EXISTS income_transactions (
   id SERIAL PRIMARY KEY,
   company_id INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
-  booking_id INTEGER REFERENCES bookings(id) ON DELETE SET NULL,
+  booking_id INTEGER REFERENCES bookings(booking_id) ON DELETE SET NULL,
   transaction_date DATE NOT NULL,
   amount DECIMAL(10, 2) NOT NULL CHECK (amount > 0),
   description TEXT,
   payment_method VARCHAR(50),
   reference_number VARCHAR(100),
-  created_by INTEGER REFERENCES users(id),
+  created_by INTEGER REFERENCES users(user_id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS expense_transactions (
   vendor_name VARCHAR(255),
   payment_method VARCHAR(50),
   reference_number VARCHAR(100),
-  created_by INTEGER REFERENCES users(id),
+  created_by INTEGER REFERENCES users(user_id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

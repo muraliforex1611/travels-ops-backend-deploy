@@ -9,7 +9,7 @@ import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './filters/http-exception.filter';
 import * as dotenv from 'dotenv';
 import helmet from 'helmet';
-import * as compression from 'compression';
+import compression from 'compression';
 
 dotenv.config();
 

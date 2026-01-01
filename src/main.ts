@@ -3,15 +3,29 @@
 // =====================================================================
 
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './filters/http-exception.filter';
 import * as dotenv from 'dotenv';
+import helmet from 'helmet';
+import * as compression from 'compression';
 
 dotenv.config();
 
+const logger = new Logger('Bootstrap');
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Security headers with Helmet
+  app.use(helmet({
+    contentSecurityPolicy: process.env.NODE_ENV === 'production',
+    crossOriginEmbedderPolicy: false,
+  }));
+
+  // Response compression
+  app.use(compression());
 
   // Global Prefix
   app.setGlobalPrefix('api/v1');
@@ -29,6 +43,9 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
+
+  // Global Exception Filter
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   // Global Validation Pipe
   app.useGlobalPipes(
@@ -59,13 +76,19 @@ async function bootstrap() {
   const port = process.env.PORT || 3001;
   await app.listen(port);
 
-  console.log(`
+  logger.log(`
     ╔═══════════════════════════════════════════════════════════╗
     ║   🚀 Travel Operations Platform API                       ║
     ║   📡 Server running on: http://localhost:${port}           ║
     ║   📚 API Documentation: http://localhost:${port}/api/docs  ║
+    ║   🔒 Security: Helmet + Compression enabled               ║
+    ║   ✅ Environment: ${process.env.NODE_ENV || 'development'}║
     ╚═══════════════════════════════════════════════════════════╝
   `);
+  logger.log(`Application is running on http://localhost:${port}`);
 }
 
-bootstrap();
+bootstrap().catch((err) => {
+  logger.error('Failed to start application', err);
+  process.exit(1);
+});

@@ -17,6 +17,7 @@ import { AllocationModule } from './modules/allocation/allocation.module';
 import { EmailIntegrationModule } from './modules/email-integration/email-integration.module';
 import { WhatsappIntegrationModule } from './modules/whatsapp-integration/whatsapp-integration.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { HealthController } from './health.controller';
 
 @Module({
@@ -36,6 +37,7 @@ import { HealthController } from './health.controller';
     // Feature Modules
     AuthModule,
     UsersModule,
+    DashboardModule,
     CompaniesModule,
     WhatsappIntegrationModule,
     EmailIntegrationModule,
